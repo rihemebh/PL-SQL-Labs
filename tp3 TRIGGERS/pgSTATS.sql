@@ -1,0 +1,11 @@
+﻿CREATE TABLE stats(
+    typeMaj CHAR(6) PRIMARY KEY,
+    nbMaj BIGINT,
+    timestampModif TIMESTAMP
+);
+
+INSERT INTO stats VALUES('INSERT', 0, NULL);
+INSERT INTO stats VALUES('UPDATE', 0, NULL);
+INSERT INTO stats VALUES('DELETE', 0, NULL);
+
+COMMIT;
