@@ -69,3 +69,35 @@ close liste;
 return s/nb;
 END $$;
 select calcul();
+
+--EX4
+
+create or replace function top() returns setof tNuplet as $$
+declare 
+rang integer:=1;
+i integer :=0;
+s tNuplet;
+r varchar(10);
+
+curs CURSOR for select ename from emp order by empno ;
+begin
+open curs; 
+fetch curs into r;
+while found
+loop
+s.texte = r;
+s.nombre= rang+i;
+i:=s.nombre ;
+rang := rang+1;
+return next s;
+MOVE FORWARD rang-1 from curs;
+fetch curs into r;
+end loop;
+
+end
+$$
+language plpgsql;
+
+
+select * from top();
+
