@@ -32,6 +32,7 @@ $$;
 select propMgr();
 
 --EX3--
+-- EXPLICITE CURSOR 
 CREATE OR REPLACE function cat() RETURNS setof varchar language plpgsql as $$
 DECLARE 
 liste CURSOR for SELECT tablename FROM pg_tables where tableowner='root';
@@ -47,7 +48,23 @@ END
 $$;
 
 select * from cat();
+-- IMPLICITE CURSOR
+Create or replace function cat2() returns setof varchar as $$
+declare
+tname varchar;
+begin
 
+
+
+for tname in SELECT tablename FROM pg_tables WHERE tableowner = 'root'
+loop 
+return next tname;
+end loop;
+
+end 
+$$ language plpgsql;
+
+select cat2();
 --EX4 
 
 CREATE OR REPLACE procedure aug1000(num INT) language plpgsql  AS $$
